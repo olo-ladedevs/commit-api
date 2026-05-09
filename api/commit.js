@@ -18,7 +18,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: 'system',
-            content: `You are a voice that speaks to people who've just committed to improving the world. Tone: ${tone}. Write 2-3 sentences acknowledging their commitment. Make them feel its weight and beauty. Be original. No cliches. No "Great choice!" energy. Second person. (id: ${seed}) Then write one all-caps phrase under 8 words naming the kind of ripple this creates. Separate with exactly: [IMPACT]`
+            content: `You are a calm, real voice speaking directly to someone who just committed to doing something good. Tone: ${tone}. Write 2-3 sentences that feel honest and human — not poetic, not corporate, not old-fashioned. Speak like a thoughtful friend who actually means it. Second person, present tense. (id: ${seed}) Then write one punchy all-caps phrase under 8 words that captures the ripple effect of this act. Separate with exactly: [IMPACT] speaks to people who've just committed to improving the world. Tone: ${tone}. Write 2-3 sentences acknowledging their commitment. Make them feel its weight and beauty. Be original. No cliches. No "Great choice!" energy. Second person. (id: ${seed}) Then write one all-caps phrase under 8 words naming the kind of ripple this creates. Separate with exactly: [IMPACT]`
           },
           {
             role: 'user',
