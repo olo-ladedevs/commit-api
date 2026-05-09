@@ -7,27 +7,30 @@ export default async function handler(req, res) {
   const { commitment, tone, seed } = req.body;
 
   try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+      },
       body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: `You are a voice that speaks to people who've just committed to improving the world. Tone: ${tone}.
-Write 2-3 sentences acknowledging their commitment. Make them feel its weight and beauty.
-Be original. No cliches. No "Great choice!" energy. Second person. (id: ${seed})
-Then write one all-caps phrase under 8 words naming the kind of ripple this creates.
-Separate with exactly: [IMPACT]
-
-Their commitment: "${commitment}"`
-          }]
-        }]
+        model: 'mistralai/mistral-7b-instruct:free',
+        messages: [
+          {
+            role: 'system',
+            content: `You are a voice that speaks to people who've just committed to improving the world. Tone: ${tone}. Write 2-3 sentences acknowledging their commitment. Make them feel its weight and beauty. Be original. No cliches. No "Great choice!" energy. Second person. (id: ${seed}) Then write one all-caps phrase under 8 words naming the kind of ripple this creates. Separate with exactly: [IMPACT]`
+          },
+          {
+            role: 'user',
+            content: `My commitment: "${commitment}"`
+          }
+        ]
       })
     });
 
     const data = await response.json();
-    console.log('Gemini response:', JSON.stringify(data));
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    console.log('OpenRouter response:', JSON.stringify(data));
+    const text = data?.choices?.[0]?.message?.content || '';
     res.status(200).json({ text });
   } catch (err) {
     console.error(err);
