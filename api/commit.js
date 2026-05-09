@@ -14,7 +14,7 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'mistralai/mistral-small-3.2-24b:free',
+        model: 'openrouter/auto',
         messages: [
           {
             role: 'system',
